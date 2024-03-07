@@ -29,6 +29,10 @@ class RedirectIfAuthenticated
             if (Auth::guard('user')->check()) {
                 return redirect(RouteServiceProvider::HOMEADMIN);
             }
+
+            if(Auth::guard('satker')->check()){
+                return redirect(RouteServiceProvider::HOMESATKER);
+            }
         }
 
         return $next($request);

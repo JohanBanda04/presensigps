@@ -71,7 +71,9 @@
                                                     <select name="kode_dept" id="kode_dept" class="form-select">
                                                         <option value="">-Pilih Departemen-</option>
                                                         @foreach($departemen as $d)
-                                                            <option {{ Request('kode_dept')==$d->kode_dept? 'selected' : '' }} value="{{ $d->kode_dept }}">{{ $d->nama_dept }}</option>
+                                                            <option {{ Request('kode_dept')==$d->kode_dept? 'selected' : '' }} value="{{ $d->kode_dept }}">
+                                                                {{ $d->nama_dept }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -106,6 +108,7 @@
                                             <th>No. HP</th>
                                             <th>Foto</th>
                                             <th>Departemen</th>
+                                            <th>Cabang</th>
                                             <th>Aksi</th>
                                         </tr>
                                         </thead>
@@ -130,6 +133,7 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $d->nama_dept }}</td>
+                                                <td>{{ $d->kode_cabang }}</td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <a href="#" class="edit btn btn-info btn-sm "
@@ -279,9 +283,21 @@
                         <div class="row mt-2">
                             <div class="col-12">
                                 <select name="kode_dept" id="kode_dept" class="form-select">
-                                    <option value="">-Pilih Departemen-</option>
+                                    <option value="">-Departemen-</option>
                                     @foreach($departemen as $d)
-                                        <option {{ Request('kode_dept')==$d->kode_dept? 'selected' : '' }} value="{{ $d->kode_dept }}">{{ $d->nama_dept }}</option>
+                                        <option  value="{{ $d->kode_dept }}">{{ $d->nama_dept }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <select name="kode_cabang" id="kode_cabang" class="form-select">
+                                    <option value="">-Cabang-</option>
+                                    @foreach($cabang as $d)
+                                        <option  value="{{ $d->kode_cabang }}">
+                                            {{ strtoupper($d->nama_cabang) }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>

@@ -101,7 +101,7 @@
             /*cara ambil value*/
 
             var id = $(this).attr("id");
-            alert(id);
+            //alert(id);
             $.ajax({
                 type : 'POST',
                 url : '/tampilkanpeta',

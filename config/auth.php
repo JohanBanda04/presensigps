@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'satker' => [
+            'driver' => 'session',
+            'provider' => 'satkers',
+        ],
     ],
 
     /*
@@ -75,6 +79,10 @@ return [
         'karyawans' => [
             'driver' => 'eloquent',
             'model' => App\Models\Karyawan::class,
+        ],
+        'satkers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Satker::class,
         ],
 
         // 'users' => [

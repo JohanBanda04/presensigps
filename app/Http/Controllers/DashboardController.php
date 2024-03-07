@@ -81,4 +81,11 @@ class DashboardController extends Controller
             ->first();
         return view('dashboard.dashboardadmin', compact('rekappresensi','rekapizin'));
     }
+    public function dashboardsatker(){
+        //dd("test");
+        /*cara get all table data*/
+        $satker = DB::table('satker')->get();
+        //dd($satker);
+        return view('dashboard_satker.dashboardsatker',compact('satker'));
+    }
 }

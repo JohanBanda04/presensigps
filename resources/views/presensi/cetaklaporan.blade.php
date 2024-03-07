@@ -14,7 +14,7 @@
     <!-- Set page size here: A5, A4 or A3 -->
     <!-- Set also "landscape" if you need -->
     <style>@page {
-            size: A4
+            size: A4 ;
         }
 
         #title {

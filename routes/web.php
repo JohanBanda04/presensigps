@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CabangController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DatasatkerController;
 use App\Http\Controllers\DepartemenControlller;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KonfigurasiController;
@@ -28,6 +30,20 @@ Route::middleware(['guest:karyawan'])->group(function () {
     Route::post('/proseslogin', [AuthController::class, 'proseslogin']);
 });
 
+/*hanya bisa diakses oleh guest*/
+Route::middleware(['guest:satker'])->group(function(){
+    Route::get('/panelsatker',function(){
+        return view('auth.loginsatker');
+    })->name('loginsatker');
+
+    Route::post('/prosesloginsatker',[AuthController::class,'prosesloginsatker']);
+});
+
+
+
+
+
+/*hanya bisa diakses oleh guest*/
 Route::middleware(['guest:user'])->group(function () {
     Route::get('/panel', function () {
         return view('auth.loginadmin');
@@ -55,6 +71,43 @@ Route::middleware(['auth:karyawan'])->group(function () {
 
 });
 
+
+//Route::middleware(['auth:satker'])->group(function(){
+//    Route::get('/proseslogoutsatker',[AuthController::class,'proseslogoutsatker']);
+//    Route::get('panelsatker/dashboardsatker',[DashboardController::class,'dashboardsatker']);
+//});
+/*hanya utk satker yang terotentikasi*/
+
+/*Hanya untuk user yang telah terotentikasi*/
+Route::middleware(['auth:satker','checkrole'])->group(function(){
+    Route::get('/proseslogoutsatker',[AuthController::class,'proseslogoutsatker']);
+    Route::get('/panelsatker/dashboardsatker',[DashboardController::class,'dashboardsatker']);
+
+    //DataUser
+    Route::get('/datasatker',[DatasatkerController::class,'index']);
+    Route::post('/satker/store',[DatasatkerController::class,'store']);
+    Route::post('/satker/edit',[DatasatkerController::class,'edit']);
+    Route::post('/satker/{id}/update',[DatasatkerController::class,'update']);
+    Route::post('/satker/{id}/delete',[DatasatkerController::class,'delete']);
+
+    //Data Berita Satker
+    Route::get('/datasatker/{kode_satker}/getberita',[DatasatkerController::class,'getberita']);
+    Route::post('/datasatker/storeberita',[DatasatkerController::class,'storeberita']);
+    Route::post('/datasatker/tampilkandetailberita',[DatasatkerController::class,'tampilkandetailberita']);
+    Route::post('/datasatker/{id_berita}/{kode_satker}/deleteberita',[DatasatkerController::class,'deleteberita']);
+    Route::post('/datasatker/editberita',[DatasatkerController::class,'editberita']);
+    Route::post('/datasatker/editberita/hapuslink',[DatasatkerController::class,'hapuslink']);
+    Route::post('/datasatker/editberita/hapuslink_nasional',[DatasatkerController::class,'hapuslink_nasional']);
+    Route::post('/datasatker/{id_beria}/updateberita',[DatasatkerController::class,'updateberita']);
+    Route::post('/datasatker/{kode_satker}/getberitabytanggal',[DatasatkerController::class,'getberitabytanggal']);
+
+    Route::get('/beritasatker/laporanberita',[DatasatkerController::class,'laporanberita']);
+    Route::post('/beritasatker/cetaklaporanberita',[DatasatkerController::class,'cetaklaporanberita']);
+    Route::get('/beritasatker/rekapberita',[DatasatkerController::class,'rekapberita']);
+    Route::post('/beritasatker/cetaklaporanberita_rekap',[DatasatkerController::class,'cetaklaporanberita_rekap']);
+
+});
+/*Hanya untuk user yang telah terotentikasi*/
 Route::middleware(['auth:user'])->group(function(){
     Route::get('/proseslogoutadmin',[AuthController::class,'proseslogoutadmin']);
     Route::get('panel/dashboardadmin',[DashboardController::class,'dashboardadmin']);
@@ -85,9 +138,21 @@ Route::middleware(['auth:user'])->group(function(){
     Route::post('/presensi/approveizinsakit',[PresensiController::class,'approveizinsakit']);
     Route::get('/presensi/{id}/batalkanizinsakit',[PresensiController::class,'batalkanizinsakit']);
 
+    //Cabang
+    Route::get('/cabang',[CabangController::class,'index']);
+    Route::post('/cabang/store',[CabangController::class,'store']);
+    Route::post('/cabang/edit',[CabangController::class,'edit']);
+    Route::post('/cabang/update',[CabangController::class,'update']);
+    Route::post('/cabang/{kode_cabang}/delete',[CabangController::class,'delete']);
+
     //Konfigurasi
     Route::get('/konfigurasi/lokasikantor',[KonfigurasiController::class,'lokasikantor']);
     Route::post('/konfigurasi/updatelokasikantor',[KonfigurasiController::class,'updatelokasikantor']);
+    Route::get('/konfigurasi/jamkerja',[KonfigurasiController::class,'jamkerja']);
+    Route::post('/konfigurasi/storejamkerja',[KonfigurasiController::class,'storejamkerja']);
+    Route::post('/konfigurasi/editjamkerja',[KonfigurasiController::class,'editjamkerja']);
+    Route::post('/konfigurasi/updatejamkerja',[KonfigurasiController::class,'updatejamkerja']);
+    Route::post('/konfigurasi/{kode_jam_kerja}/delete',[KonfigurasiController::class,'deletejamkerja']);
 
 
 });
